@@ -22,5 +22,21 @@ namespace AzureSaturdayPerth2015Api.Controllers
 
             return View(entries);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Clear()
+        {
+            if (!Request.IsLocal)
+                return HttpNotFound();
+
+            using (var context = new DatabaseContext())
+            {
+                var entries = await context.Entries.ToListAsync();
+                context.Entries.RemoveRange(entries);
+                await context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

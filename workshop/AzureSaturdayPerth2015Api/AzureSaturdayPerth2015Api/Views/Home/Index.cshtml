@@ -1,9 +1,17 @@
 ﻿@model List<AzureSaturdayPerth2015Api.Domain.Entry>
+           
+<meta http-equiv="refresh" content="5">
 
 <div class="jumbotron">
     <h1>2015 Azure Saturday Perth</h1>
     <p class="lead">Azure Resource Manager Workshop</p>
     <p>Follow the workshop instructions at <a href="http://bit.ly/azsatperth2015_arm">bit.ly/azsatperth2015_arm</a>.</p>
+    @if (Request.IsLocal)
+    {
+        <form action="@Url.Action("Clear")" method="post">
+            <button type="submit" class="btn btn-danger">Clear</button>
+        </form>
+    }
 </div>
 
 <h2>The following applications have been deployed</h2>
