@@ -13,6 +13,11 @@ namespace AzureSaturdayPerth2015Api.Infrastructure.Database
             System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<DatabaseContext, Configuration>(true));
         }
 
+        public DatabaseContext() : base("DefaultConnection")
+        {
+            
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
