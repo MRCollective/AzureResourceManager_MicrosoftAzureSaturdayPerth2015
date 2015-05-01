@@ -1,0 +1,15 @@
+obj
+bin
+_ReSharper.*
+*.user
+*.ReSharper
+*.TeamCity.user
+*.suo
+~$*
+*~
+*.log
+packages
+DemoSiteToDeploy.deploy.cmd
+DemoSiteToDeploy.deploy-readme.txt
+DemoSiteToDeploy.SetParameters.xml
+DemoSiteToDeploy.SourceManifest.xml

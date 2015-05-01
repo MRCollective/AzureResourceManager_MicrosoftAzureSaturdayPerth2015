@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Azure Saturday Perth 2015 Demo Site</title>
+    <link href="https://oss.maxcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+    <body>
+        <div class="container">
+            <h1>Azure Saturday Perth 2015 Demo Site</h1>
+            <h2 id="siteName"></h2>
+            <p><button id="registerButton" class="btn btn-primary">Register</button></p>
+            <p id="status"></p>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                var status = $("#status");
+                var siteName = document.domain;
+                var apiBaseUrl = siteName == "localhost"
+                    ? "http://localhost:61884"
+                    : "https://azsatper_armdemoapi.azurewebsites.net";
+                $("#siteName").text(siteName);
+                $("#registerButton").click(function() {
+                    $.post(apiBaseUrl + "/api/entry", { Id: siteName })
+                        .success(function (data, statusText, xhr) {
+                            status
+                                .removeClass()
+                                .addClass(xhr.statusText == "Created" ? "alert alert-success" : "alert alert-info")
+                                .text(xhr.statusText == "Created" ? "Added" : "Previously added");
+                        }).error(function() {
+                            status
+                                .removeClass()
+                                .addClass("alert alert-danger")
+                                .text("Error registering");
+                        });
+                });
+            });
+        </script>
+    </body>
+</html>
