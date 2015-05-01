@@ -171,6 +171,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Database\DatabaseContext.cs" />
+    <Compile Include="Migrations\201505010505303_AddDateAddedToEntry.cs" />
+    <Compile Include="Migrations\201505010505303_AddDateAddedToEntry.Designer.cs">
+      <DependentUpon>201505010505303_AddDateAddedToEntry.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201505010457146_AddEntry.cs" />
     <Compile Include="Migrations\201505010457146_AddEntry.Designer.cs">
@@ -215,6 +219,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505010457146_AddEntry.resx">
       <DependentUpon>201505010457146_AddEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505010505303_AddDateAddedToEntry.resx">
+      <DependentUpon>201505010505303_AddDateAddedToEntry.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

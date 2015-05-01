@@ -16,6 +16,6 @@
 <ul id="deployedApps">
     @foreach (var e in Model)
     {
-        <li>@e.Id</li>
+        <li>@e.DateAdded.ToString("O") @e.Id</li>
     }
 </ul>
