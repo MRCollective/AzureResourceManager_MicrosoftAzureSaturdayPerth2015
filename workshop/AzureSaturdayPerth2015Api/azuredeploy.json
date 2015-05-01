@@ -26,6 +26,34 @@
         "2"
       ],
       "defaultValue":"0"
+    },
+    "sqlServerName": {
+      "type": "string"
+    },
+    "sqlServerAdminLogin": {
+      "type": "string"
+    },
+    "sqlServerAdminPassword": {
+      "type": "securestring"
+    },
+    "sqlDbName": {
+      "type": "string"
+    },
+    "sqlDbCollation": {
+      "type": "string",
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "sqlDbEdition": {
+      "type": "string",
+      "defaultValue": "Basic"
+    },
+    "sqlDbMaxSizeBytes": {
+      "type": "string",
+      "defaultValue": "1073741824"
+    },
+    "sqlDbServiceObjectiveId": {
+      "type": "string",
+      "defaultValue": "dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"
     }
   },
   "resources":[
@@ -74,6 +102,64 @@
           ],
           "properties": {
             "Project": "workshop/AzureSaturdayPerth2015Api/AzureSaturdayPerth2015Api/AzureSaturdayPerth2015Api.csproj"
+          }
+        },
+        {
+          "apiVersion": "2014-11-01",
+          "name": "connectionstrings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "DefaultConnection": { "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', parameters('sqlServerName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('sqlDbName'), ';User Id=', parameters('sqlServerAdminLogin'), '@', parameters('sqlServerName'), ';Password=\"', parameters('sqlServerAdminPassword'), '\";')]", "type": "SQLAzure" }
+          }
+        }
+      ]
+    },
+    {
+      "apiVersion": "2014-11-01",
+      "name": "[parameters('sqlServerName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "SQLServer"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('sqlServerAdminLogin')]",
+        "administratorLoginPassword": "[parameters('sqlServerAdminPassword')]",
+        "version": "12.0"
+      },
+      "resources": [
+        {
+          "apiVersion": "2014-11-01",
+          "name": "[parameters('sqlDbName')]",
+          "type": "databases",
+          "location": "[resourceGroup().location]",
+          "tags": {
+            "displayName": "SQLDatabase"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
+          ],
+          "properties": {
+            "edition": "[parameters('sqlDbEdition')]",
+            "collation": "[parameters('sqlDbCollation')]",
+            "maxSizeBytes": "[parameters('sqlDbMaxSizeBytes')]",
+            "requestedServiceObjectiveId": "[parameters('sqlDbServiceObjectiveId')]"
+          }
+        },
+        {
+          "apiVersion": "2014-11-01",
+          "name": "SQLServerFirewallRules",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', parameters('sqlServerName'))]"
+          ],
+          "properties": {
+            "endIpAddress": "0.0.0.0",
+            "startIpAddress": "0.0.0.0"
           }
         }
       ]

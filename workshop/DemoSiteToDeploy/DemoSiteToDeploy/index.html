@@ -18,7 +18,7 @@
                 var siteName = document.domain;
                 var apiBaseUrl = siteName == "localhost"
                     ? "http://localhost:61884"
-                    : "https://azsatper_armdemoapi.azurewebsites.net";
+                    : "https://azsatperarmdemoapi.azurewebsites.net";
                 $("#siteName").text(siteName);
                 $("#registerButton").click(function() {
                     $.post(apiBaseUrl + "/api/entry", { Id: siteName })
