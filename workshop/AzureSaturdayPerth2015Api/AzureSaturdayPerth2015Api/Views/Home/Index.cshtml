@@ -1,4 +1,21 @@
-﻿<div class="jumbotron">
+﻿@model List<AzureSaturdayPerth2015Api.Domain.Entry>
+
+<div class="jumbotron">
     <h1>2015 Azure Saturday Perth</h1>
-    <p class="lead">Follow the workshop instructions at <a href="http://bit.ly/azsatperth2015_arm">bit.ly/azsatperth2015_arm</a>.</p>
+    <p class="lead">Azure Resource Manager Workshop</p>
+    <p>Follow the workshop instructions at <a href="http://bit.ly/azsatperth2015_arm">bit.ly/azsatperth2015_arm</a>.</p>
 </div>
+
+<h2>The following applications have been deployed</h2>
+
+@if (!Model.Any())
+{
+    <p class="alert alert-danger" id="noAppsDeployed">None deployed yet :(</p>
+}
+
+<ul id="deployedApps">
+    @foreach (var e in Model)
+    {
+        <li>@e.Id</li>
+    }
+</ul>
